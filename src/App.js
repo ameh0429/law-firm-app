@@ -4,11 +4,14 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Services from './components/Services';
-import Attorneys from './components/Attorneys';
+import Team from './components/Team';
+import TeamProfile from './components/TeamProfile';
 import Booking from './components/Booking';
 import Blog from './components/Blog';
+import BlogPost from './components/BlogPost';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
+import Footer from './components/Footer';
 import './App.css';
 
 function App() {
@@ -16,11 +19,13 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<><Hero /><About /></>} />
+        <Route path="/" element={<><Hero /><About /><Footer /></>} />
         <Route path="/services" element={<Services />} />
-        <Route path="/attorneys" element={<Attorneys />} />
+        <Route path="/team" element={<Team />} />
+        <Route path="/team/:teamId" element={<TeamProfile />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:postId" element={<BlogPost />} />
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>

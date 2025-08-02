@@ -8,7 +8,7 @@ function Navbar() {
       <ul>
         <li><Link to="/">Home</Link></li>
         <li><Link to="/services">Services</Link></li>
-        <li><Link to="/attorneys">Attorneys</Link></li>
+        <li><Link to="/team">Team</Link></li>
         <li><Link to="/booking">Booking</Link></li>
         <li><Link to="/blog">Blog</Link></li>
         <li><Link to="/testimonials">Testimonials</Link></li>
