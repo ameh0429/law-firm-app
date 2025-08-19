@@ -8,11 +8,11 @@ const teamSchema = new mongoose.Schema({
     trim: true,
     maxlength: [100, 'Name cannot exceed 100 characters']
   },
-  position: {
+  specialty: {
     type: String,
-    required: [true, 'Position is required'],
+    required: [true, 'Specialty is required'],
     trim: true,
-    maxlength: [100, 'Position cannot exceed 100 characters']
+    maxlength: [100, 'Specialty cannot exceed 100 characters']
   },
   bio: {
     type: String,

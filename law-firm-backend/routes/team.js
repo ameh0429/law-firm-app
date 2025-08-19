@@ -57,11 +57,11 @@ router.get('/:id', async (req, res) => {
 // POST create team member (admin only)
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    const { name, position, bio, photoUrl } = req.body;
+    const { name, specialty, bio, photoUrl } = req.body;
 
     const teamMember = new Team({
       name,
-      position,
+      specialty,
       bio,
       photoUrl
     });
@@ -93,11 +93,11 @@ router.post('/', authMiddleware, async (req, res) => {
 // PUT update team member (admin only)
 router.put('/:id', authMiddleware, async (req, res) => {
   try {
-    const { name, position, bio, photoUrl } = req.body;
+    const { name, specialty, bio, photoUrl } = req.body;
 
     const updatedTeamMember = await Team.findByIdAndUpdate(
       req.params.id,
-      { name, position, bio, photoUrl },
+      { name, specialty, bio, photoUrl },
       { new: true, runValidators: true }
     );
 
