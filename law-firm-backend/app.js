@@ -13,8 +13,19 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
+
+const allowedOrigins = [
+  "http://localhost:3000",
+];
+if (process.env.FRONTEND_URL) {
+  allowedOrigins.push(process.env.FRONTEND_URL);
+}
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
+}));
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
