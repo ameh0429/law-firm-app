@@ -1,9 +1,30 @@
 // routes/team.js
 import express from 'express';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import fs from 'fs';
+import multer from 'multer';
 import Team from '../models/Team.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
+// const storage = multer.memoryStorage();
+// const upload = multer({ storage });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, join(__dirname, '../uploads')); // save to /uploads folder
+  },
+  filename: (req, file, cb) => {
+    const uniqueName = `${Date.now()}-${file.originalname}`;
+    cb(null, uniqueName);
+  }
+});
+
+const upload = multer({ storage });
+
 
 // GET all team members (public)
 router.get('/', async (req, res) => {
@@ -55,9 +76,10 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST create team member (admin only)
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/', authMiddleware, upload.single('profileImage'), async (req, res) => {
   try {
-    const { name, specialty, bio, photoUrl } = req.body;
+    const { name, specialty, bio } = req.body;
+     const photoUrl = `http://localhost:5000/uploads/${req.file.filename}`;
 
     const teamMember = new Team({
       name,
@@ -91,9 +113,10 @@ router.post('/', authMiddleware, async (req, res) => {
 });
 
 // PUT update team member (admin only)
-router.put('/:id', authMiddleware, async (req, res) => {
+router.put('/:id', authMiddleware, upload.single('profileImage'), async (req, res) => {
   try {
-    const { name, specialty, bio, photoUrl } = req.body;
+    const { name, specialty, bio } = req.body;
+    const photoUrl = `http://localhost:5000/uploads/${req.file.filename}`;
 
     const updatedTeamMember = await Team.findByIdAndUpdate(
       req.params.id,
@@ -148,6 +171,18 @@ router.delete('/:id', authMiddleware, async (req, res) => {
       });
     }
 
+    // Extract filename from photoUrl
+    const photoPath = deletedTeamMember.photoUrl;
+    const filename = photoPath.split('/uploads/')[1];
+    const fullPath = join(__dirname, '../uploads', filename);
+
+    // Delete image file if it exists
+    if (fs.existsSync(fullPath)) {
+      fs.unlinkSync(fullPath);
+    }
+
+    await Team.findByIdAndDelete(req.params.id);
+
     res.json({
       success: true,
       message: 'Team member deleted successfully',
@@ -163,7 +198,8 @@ router.delete('/:id', authMiddleware, async (req, res) => {
     }
     res.status(500).json({
       success: false,
-      message: 'Error deleting team member'
+      message: 'Error deleting team member',
+      error: error.message
     });
   }
 });
