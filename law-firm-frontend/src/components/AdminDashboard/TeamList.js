@@ -1,23 +1,24 @@
-// // components/TeamList.js
 // import React, { useEffect, useState } from 'react';
 
-// function TeamList() {
+// function TeamList({ refreshTrigger, onEdit }) {
 //   const [team, setTeam] = useState([]);
 //   const [loading, setLoading] = useState(true);
-//   const token = localStorage.getItem('adminToken');
+//   const token = localStorage.getItem('token');
 
 //   useEffect(() => {
+//     setLoading(true);
 //     fetch('http://localhost:5000/api/team')
 //       .then(res => res.json())
 //       .then(data => {
-//         setTeam(data.data);
+//         setTeam(data.data || []);
 //         setLoading(false);
 //       })
 //       .catch(err => {
 //         console.error('Error fetching team:', err);
+//         setTeam([]);
 //         setLoading(false);
 //       });
-//   }, []);
+//   }, [refreshTrigger]); // 👈 re-run when refreshTrigger changes
 
 //   const handleDelete = async (id) => {
 //     if (!window.confirm('Are you sure you want to delete this team member?')) return;
@@ -49,14 +50,15 @@
 //     <section className="admin-team-list">
 //       <h2>Manage Team Members</h2>
 //       <div className="team-grid">
-//         {team && team.map(member => (
+//         {team.map(member => (
 //           <div key={member._id} className="team-card">
-//             <img src={member.photoUrl} alt={member.name} />
+//             <img src={member.photoUrl} alt={member.name} className="profile-photo"
+// />
 //             <h3>{member.name}</h3>
 //             <p><strong>{member.specialty}</strong></p>
 //             <p>{member.bio}</p>
 //             <div className="actions">
-//               <button onClick={() => alert('Edit coming soon')}>Edit</button>
+//               <button onClick={() => onEdit(member)}>Edit</button>
 //               <button onClick={() => handleDelete(member._id)}>Delete</button>
 //             </div>
 //           </div>
@@ -73,6 +75,7 @@ import React, { useEffect, useState } from 'react';
 function TeamList({ refreshTrigger, onEdit }) {
   const [team, setTeam] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [expandedBioId, setExpandedBioId] = useState(null); // 👈 for toggling bios
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -88,7 +91,7 @@ function TeamList({ refreshTrigger, onEdit }) {
         setTeam([]);
         setLoading(false);
       });
-  }, [refreshTrigger]); // 👈 re-run when refreshTrigger changes
+  }, [refreshTrigger]);
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this team member?')) return;
@@ -120,19 +123,35 @@ function TeamList({ refreshTrigger, onEdit }) {
     <section className="admin-team-list">
       <h2>Manage Team Members</h2>
       <div className="team-grid">
-        {team.map(member => (
-          <div key={member._id} className="team-card">
-            <img src={member.photoUrl} alt={member.name} className="profile-photo"
-/>
-            <h3>{member.name}</h3>
-            <p><strong>{member.specialty}</strong></p>
-            <p>{member.bio}</p>
-            <div className="actions">
-              <button onClick={() => onEdit(member)}>Edit</button>
-              <button onClick={() => handleDelete(member._id)}>Delete</button>
+        {team.map(member => {
+          const isExpanded = expandedBioId === member._id;
+          const shortBio = member.bio.length > 100
+            ? member.bio.slice(0, 100) + '...'
+            : member.bio;
+
+          return (
+            <div key={member._id} className="team-card">
+              <img src={member.photoUrl} alt={member.name} className="profile-photo" />
+              <h3>{member.name}</h3>
+              <p><strong>{member.specialty}</strong></p>
+              <p>{isExpanded ? member.bio : shortBio}</p>
+              {member.bio.length > 100 && (
+                <button
+                  onClick={() =>
+                    setExpandedBioId(isExpanded ? null : member._id)
+                  }
+                  className="toggle-bio-btn"
+                >
+                  {isExpanded ? 'Hide Bio' : 'View Full Bio'}
+                </button>
+              )}
+              <div className="actions">
+                <button onClick={() => onEdit(member)}>Edit</button>
+                <button onClick={() => handleDelete(member._id)}>Delete</button>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );
