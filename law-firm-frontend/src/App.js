@@ -11,7 +11,11 @@ import TeamProfile from './components/TeamProfile';
 import Booking from './components/Booking';
 import ProtectedRoute from "./components/AdminDashboard/ProtectedRoute.js";
 import AdminDashboard from './components/AdminDashboard/AdminDashboard';
-import Blog from './components/Blog';
+// import AdminBlogList from './components/AdminDashboard/AdminBlogList';
+import AdminBlogEditorPage from './components/AdminDashboard/AdminBlogEditorPage';
+import AdminBlogManager from './components/AdminDashboard/AdminBlogManager';
+
+import BlogList from './components/BlogList';
 import BlogPost from './components/BlogPost';
 import Testimonials from './components/Testimonials';
 import Contact from './components/Contact';
@@ -28,13 +32,17 @@ function App() {
         <Route path="/team" element={<Team />} />
         <Route path="/team/:teamId" element={<TeamProfile />} />
         <Route path="/booking" element={<Booking />} />
-        <Route path="/blog" element={<Blog />} />
+        {/* <Route path="/blog" element={<Blog />} /> */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/team" element={<TeamList />} />
         <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>}/>
-        <Route path="/blog/:postId" element={<BlogPost />} />
+        <Route path="/blog/:Id" element={<BlogPost />} />
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/admin/blogs/new" element={<AdminBlogEditorPage />} />
+        <Route path="/blog" element={<BlogList />} />
+<Route path="/blog/edit/:id" element={<AdminBlogEditorPage />} />
+<Route path="/admin/blogs" element={<AdminBlogManager />} />
       </Routes>
     </Router>
   );

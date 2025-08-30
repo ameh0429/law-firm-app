@@ -1,32 +1,45 @@
-// components/BlogPost.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-const blogPosts = {
-  'corporate-law-basics': {
-    title: 'Corporate Law Basics',
-    date: 'July 15, 2025',
-    content: 'Corporate law governs the formation, operation, and dissolution of corporations. It includes regulations on mergers, acquisitions, shareholder rights, and compliance.'
-  },
-  'family-law-guide': {
-    title: 'A Guide to Family Law',
-    date: 'July 15, 2025',
-    content: 'Family law deals with legal issues involving relationships, including divorce, child custody, adoption, and domestic violence. It requires sensitivity and strategic planning.'
-  }
-};
-
 function BlogPost() {
-  const { postId } = useParams();
-  const post = blogPosts[postId];
+  const { id } = useParams();
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    if (!id) return;
+    fetch(`http://localhost:5000/api/blog/${id}`)
+      .then(res => res.json())
+      // .then(data => setPost(data.data))
+      .then(data => {
+        setPost(data.data);
+        setLoading(false);
+      })
+
+      .catch(err => console.error('Error fetching post:', err));
+  }, [id]);
+
+  // if (!post) return <p>Loading...</p>;
+
+   if (loading) return <p>Loading blog post...</p>;
   if (!post) return <p>Blog post not found.</p>;
 
+
   return (
-    <div className="blog-post">
-      <h2>{post.title}</h2>
-      <p className="blog-date">{post.date}</p>
-      <p>{post.content}</p>
-    </div>
+   <article className="blog-post">
+  <h2>{post.title}</h2>
+  <p>
+    <em>
+      {new Date(post.date).toLocaleDateString('en-NG', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })}
+    </em>
+    {' '} | <strong>Author:</strong> {post.author}
+  </p>
+  <div>{post.content}</div>
+</article>
   );
 }
 

@@ -57,8 +57,20 @@ router.get('/', async (req, res) => {
 
 // GET single blog post (public)
 router.get('/:id', async (req, res) => {
+
+   // Validate ID format before querying
+  const id = req.params.id;
+
+  if (!id || id.length !== 24) {
+    return res.status(400).json({
+      success: false,
+      message: 'Invalid blog post ID'
+    });
+  }
+
+
   try {
-    const blogPost = await BlogPost.findById(req.params.id);
+    const blogPost = await BlogPost.findById(id);
     
     if (!blogPost) {
       return res.status(404).json({

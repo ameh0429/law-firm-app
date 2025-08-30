@@ -1,51 +1,16 @@
-// import React, { useState } from 'react';
-// import TeamList from './TeamList';
-// import AddTeamMemberModal from './AddTeamMemberModal'; 
-
-// function AdminDashboard() {
-//   const [showModal, setShowModal] = useState(false);
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     const formData = new FormData(e.target);
-//     const newMember = {
-//       name: formData.get('name'),
-//       specialty: formData.get('specialty'),
-//       experience: formData.get('experience'),
-//       profileImage: formData.get('profileImage'),
-//     };
-//     console.log('New Team Member:', newMember);
-//     setShowModal(false);
-//   };
-
-//   return (
-//     <div className="admin-dashboard">
-//       <h2>Welcome to the Admin Dashboard</h2>
-//       <button onClick={() => setShowModal(true)} className="add-button">
-//         Add Team Member
-//       </button>
-
-//       <AddTeamMemberModal
-//         showModal={showModal}
-//         setShowModal={setShowModal}
-//         handleSubmit={handleSubmit}
-//       />
-
-//       <TeamList />
-//     </div>
-//   );
-// }
-
-// export default AdminDashboard;
-
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import TeamList from './TeamList';
+// import AdminBlogList from './AdminBlogList';
 import AddTeamMemberModal from './AddTeamMemberModal';
 import EditTeamMemberModal from './EditTeamMemberModal';
 
 function AdminDashboard() {
   const [showModal, setShowModal] = useState(false);
   const [refreshTeam, setRefreshTeam] = useState(false); // trigger re-fetch in TeamList
+  const navigate = useNavigate();
+
+  // const [view, setView] = useState('team');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -117,6 +82,26 @@ const handleEditSubmit = async (formData) => {
       <button onClick={() => setShowModal(true)} className="add-button">
         Add Team Member
       </button>
+
+      {/* <div className="admin-actions">
+        <button onClick={() => navigate('/admin/blogs/new')}>
+          Create Blog Post
+        </button>
+      </div> */}
+
+      <button onClick={() => navigate('/admin/blogs')}>
+  Manage Blog Posts
+</button>
+
+
+      {/* <div className="admin-nav">
+  <button onClick={() => setView('team')}>Manage Team Members</button>
+  <button onClick={() => setView('blog')}>Manage Blog Posts</button>
+</div>
+
+      {view === 'team' && <TeamList />}
+      {view === 'blog' && <AdminBlogList />} */}
+
 
       <AddTeamMemberModal
         showModal={showModal}
