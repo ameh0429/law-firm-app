@@ -1,5 +1,7 @@
 // routes/team.js
 import express from 'express';
+// import multer from 'multer'
+import upload from '../middleware/upload.js';
 import Team from '../models/Team.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
 
@@ -55,9 +57,13 @@ router.get('/:id', async (req, res) => {
 });
 
 // POST create team member (admin only)
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/', authMiddleware, upload.single('profileImage'), async (req, res) => {
   try {
-    const { name, specialty, bio, photoUrl } = req.body;
+    const { name, specialty, bio } = req.body;
+    // const photoUrl = req.file ? `/uploads/${req.file.filename}` : null;
+    const photoUrl = req.file
+  ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
+  : null;
 
     const teamMember = new Team({
       name,
@@ -91,9 +97,12 @@ router.post('/', authMiddleware, async (req, res) => {
 });
 
 // PUT update team member (admin only)
-router.put('/:id', authMiddleware, async (req, res) => {
+router.put('/:id', authMiddleware, upload.single('profileImage'), async (req, res) => {
   try {
-    const { name, specialty, bio, photoUrl } = req.body;
+    const { name, specialty, bio } = req.body;
+    const photoUrl = req.file
+  ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
+  : null;
 
     const updatedTeamMember = await Team.findByIdAndUpdate(
       req.params.id,
