@@ -1,6 +1,7 @@
 // routes/team.js
 import express from 'express';
-// import multer from 'multer'
+import path from 'path';
+import fs from 'fs';
 import upload from '../middleware/upload.js';
 import Team from '../models/Team.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
@@ -60,7 +61,6 @@ router.get('/:id', async (req, res) => {
 router.post('/', authMiddleware, upload.single('profileImage'), async (req, res) => {
   try {
     const { name, specialty, bio } = req.body;
-    // const photoUrl = req.file ? `/uploads/${req.file.filename}` : null;
     const photoUrl = req.file
   ? `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`
   : null;
@@ -155,6 +155,16 @@ router.delete('/:id', authMiddleware, async (req, res) => {
         success: false,
         message: 'Team member not found'
       });
+    }
+
+    // Extract filename from photoUrl
+    const photoUrl = deletedTeamMember.photoUrl;
+    const filename = photoUrl?.split('/uploads/')[1];
+    const fullPath = path.join(process.cwd(), 'uploads', filename);
+
+    // Delete image file if it exists
+    if (filename && fs.existsSync(fullPath)) {
+      fs.unlinkSync(fullPath);
     }
 
     res.json({
