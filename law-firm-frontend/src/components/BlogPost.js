@@ -7,22 +7,28 @@ function BlogPost() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!id) return;
-    fetch(`http://localhost:5000/api/blog/${id}`)
-      .then(res => res.json())
-      // .then(data => setPost(data.data))
-      .then(data => {
+  if (!id) return;
+
+  fetch(`http://localhost:5000/api/blog/${id}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log('Fetched blog post:', data);
+      if (data.success && data.data) {
         setPost(data.data);
-        setLoading(false);
-      })
+      } else {
+        console.warn('Unexpected response format:', data);
+        setPost(null);
+      }
+      setLoading(false);
+    })
+    .catch(err => {
+      console.error('Error fetching post:', err);
+      setLoading(false);
+    });
+}, [id]);
 
-      .catch(err => console.error('Error fetching post:', err));
-  }, [id]);
-
-  // if (!post) return <p>Loading...</p>;
-
-   if (loading) return <p>Loading blog post...</p>;
-  if (!post) return <p>Blog post not found.</p>;
+  if (loading) return <p>Loading blog post...</p>;
+  if (!post || !post.title) return <p>Blog post not found.</p>;
 
 
   return (
