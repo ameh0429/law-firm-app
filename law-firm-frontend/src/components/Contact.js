@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -7,11 +7,28 @@ function Contact() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    alert(`Thanks, ${form.name}. We'll get back to you soon!`);
-    setForm({ name: '', email: '', message: '' });
-  };
+  const handleSubmit = async e => {
+  e.preventDefault();
+
+  try {
+    const res = await fetch('http://localhost:5000/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(form)
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert('Message sent successfully!');
+      setForm({ name: '', email: '', message: '' });
+    } else {
+      alert(data.message || 'Failed to send message');
+    }
+  } catch (err) {
+    console.error('Error sending message:', err);
+    alert('Server error');
+  }
+};
 
   return (
     <section className="section contact">

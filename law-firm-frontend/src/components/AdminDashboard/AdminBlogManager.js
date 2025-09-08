@@ -25,25 +25,6 @@ function AdminBlogManager() {
   };
 
   return (
-    // <section className="admin-blog-manager">
-    //   <h2>Manage Blog Posts</h2>
-    //   <button onClick={() => navigate('/admin/blogs/new')}>
-    //     Create New Blog Post
-    //   </button>
-
-    //   <div className="blog-grid">
-    //     {posts.map(post => (
-    //       <div key={post._id} className="blog-card">
-    //         <h3>{post.title}</h3>
-    //         <p>{post.content.slice(0, 100)}...</p>
-    //         <p><em>{new Date(post.date).toLocaleDateString()}</em></p>
-    //         <button onClick={() => navigate(`/admin/blogs/edit/${post._id}`)}>Edit</button>
-    //         <button onClick={() => handleDelete(post._id)}>Delete</button>
-    //       </div>
-    //     ))}
-    //   </div>
-    // </section>
-
     <section className="admin-blog-manager">
   <div className="header">
     <h2>Manage Blog Posts</h2>

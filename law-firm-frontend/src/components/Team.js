@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-// import './AdminDashboard/styles/Team.css';
 
 function Team() {
   const [team, setTeam] = useState([]);

@@ -11,10 +11,8 @@ import TeamProfile from './components/TeamProfile';
 import Booking from './components/Booking';
 import ProtectedRoute from "./components/AdminDashboard/ProtectedRoute.js";
 import AdminDashboard from './components/AdminDashboard/AdminDashboard';
-// import AdminBlogList from './components/AdminDashboard/AdminBlogList';
 import AdminBlogEditorPage from './components/AdminDashboard/AdminBlogEditorPage';
 import AdminBlogManager from './components/AdminDashboard/AdminBlogManager';
-
 import BlogList from './components/BlogList';
 import BlogPost from './components/BlogPost';
 import Testimonials from './components/Testimonials';
@@ -40,7 +38,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/admin/blogs/new" element={<AdminBlogEditorPage />} />
         <Route path="/blog" element={<BlogList />} />
-        <Route path="/blog/edit/:id" element={<AdminBlogEditorPage />} />
+        <Route path="/admin/blogs/edit/:id" element={<AdminBlogEditorPage />} />
         <Route path="/admin/blogs" element={<AdminBlogManager />} />
       </Routes>
     </Router>

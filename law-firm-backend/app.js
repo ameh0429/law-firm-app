@@ -1,17 +1,13 @@
 // server.js
 import express from 'express';
 import mongoose from 'mongoose'
-// import multer from 'multer';
-import path from 'path';
-// import fs from 'fs';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import teamRoutes from './routes/team.js';
 import blogRoutes from './routes/blog.js';
 import adminRoutes from './routes/admin.js';
-
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
+import contactRoutes from './routes/contact.js';
+import bookingRoutes from './routes/booking.js'
 
 // Load environment variables
 dotenv.config();
@@ -41,7 +37,8 @@ mongoose.connect(process.env.MONGO_URI)
 app.use('/api/team', teamRoutes);
 app.use('/api/blog', blogRoutes);
 app.use('/api/admin', adminRoutes);
-
+app.use('/api/contact', contactRoutes);
+app.use('/api/booking', bookingRoutes);
 app.use('/uploads', express.static('uploads'));
 
 // Health check endpoint

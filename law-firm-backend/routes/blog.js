@@ -62,21 +62,12 @@ router.get('/:id', async (req, res) => {
    // Validate ID format before querying
   const id = req.params.id;
 
-  // if (!id || id.length !== 24) {
-  //   return res.status(400).json({
-  //     success: false,
-  //     message: 'Invalid blog post ID'
-  //   });
-  // }
-
   if (!mongoose.Types.ObjectId.isValid(id)) {
   return res.status(400).json({
     success: false,
     message: 'Invalid blog post ID'
   });
 }
-
-
 
   try {
     const blogPost = await BlogPost.findById(id);

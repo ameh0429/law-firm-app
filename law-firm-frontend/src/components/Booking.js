@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 function Booking() {
   const [form, setForm] = useState({ name: '', date: '', time: '' });
@@ -7,11 +7,29 @@ function Booking() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    alert(`Appointment booked for ${form.name} on ${form.date} at ${form.time}`);
-    setForm({ name: '', date: '', time: '' });
+
+    try {
+      const res = await fetch('http://localhost:5000/api/booking', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form)
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert('Booking confirmed!');
+        setForm({ name: '', date: '', time: '' });
+      } else {
+        alert(data.message || 'Booking failed');
+      }
+    } catch (err) {
+      console.error('Booking error:', err);
+      alert('Server error');
+    }
   };
+
 
   return (
     <section className="section booking">
