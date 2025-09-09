@@ -15,8 +15,9 @@ function AdminDashboard() {
     const formData = new FormData(form);
     const token = localStorage.getItem('token');
 
+    const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
     try {
-      const res = await fetch('http://localhost:5000/api/team', {
+      const res = await fetch(`${API_BASE_URL}/api/team`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${token}`

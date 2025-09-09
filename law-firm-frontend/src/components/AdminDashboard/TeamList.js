@@ -6,9 +6,10 @@ function TeamList({ refreshTrigger, onEdit }) {
   const [expandedBioId, setExpandedBioId] = useState(null); 
   const token = localStorage.getItem('token');
 
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:5000/api/team')
+    fetch(`${API_BASE_URL}/api/team`)
       .then(res => res.json())
       .then(data => {
         setTeam(data.data || []);
@@ -25,7 +26,7 @@ function TeamList({ refreshTrigger, onEdit }) {
     if (!window.confirm('Are you sure you want to delete this team member?')) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/team/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/team/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

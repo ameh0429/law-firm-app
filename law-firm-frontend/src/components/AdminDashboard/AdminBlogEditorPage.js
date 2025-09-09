@@ -7,10 +7,11 @@ function AdminBlogEditorPage() {
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(!!id);
 
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
   useEffect(() => {
     if (!id) return;
 
-    fetch(`http://localhost:5000/api/blog/${id}`)
+    fetch(`${API_BASE_URL}/api/blog/${id}`)
       .then(res => res.json())
       .then(data => {
         setPost(data.data);

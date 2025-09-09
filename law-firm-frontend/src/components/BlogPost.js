@@ -8,8 +8,9 @@ function BlogPost() {
 
   useEffect(() => {
   if (!id) return;
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
-  fetch(`http://localhost:5000/api/blog/${id}`)
+  fetch(`${API_BASE_URL}/api/blog/${id}`)
     .then(res => res.json())
     .then(data => {
       console.log('Fetched blog post:', data);
@@ -44,7 +45,6 @@ function BlogPost() {
     </em>
     {' '} | <strong>Author:</strong> {post.author}
   </p>
-  {/* <div>{post.content}</div> */}
   <div>{post.content.split('\n\n').map((para, index) =>(<p key = {index}>{para}</p>))}</div>
 </article>
   );

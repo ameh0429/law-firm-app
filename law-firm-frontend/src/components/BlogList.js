@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 
 function BlogList() {
   const [posts, setPosts] = useState([]);
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/blog')
+    fetch(`${API_BASE_URL}/api/blog`)
       .then(res => res.json())
       .then(data => setPosts(data.data || []))
       .catch(err => console.error('Error fetching blogs:', err));

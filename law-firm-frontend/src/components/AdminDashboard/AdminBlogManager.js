@@ -6,8 +6,10 @@ function AdminBlogManager() {
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
 
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
   useEffect(() => {
-    fetch('http://localhost:5000/api/blog/admin/all', {
+    fetch(`${API_BASE_URL}/api/blog/admin/all`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(res => res.json())
@@ -17,7 +19,7 @@ function AdminBlogManager() {
 
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this blog post?')) return;
-    await fetch(`http://localhost:5000/api/blog/${id}`, {
+    await fetch(`${API_BASE_URL}/api/blog/${id}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token}` }
     });

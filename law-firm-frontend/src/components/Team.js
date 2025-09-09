@@ -5,8 +5,10 @@ function Team() {
   const [team, setTeam] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
   useEffect(() => {
-    fetch('http://localhost:5000/api/team')
+    fetch(`${API_BASE_URL}/api/team`)
       .then(res => res.json())
       .then(data => {
         setTeam(data.data || []);

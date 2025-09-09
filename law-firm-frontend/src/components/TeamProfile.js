@@ -6,8 +6,10 @@ function TeamProfile() {
   const { teamId } = useParams();
   const [member, setMember] = useState(null);
 
+  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
    useEffect(() => {
-    fetch(`http://localhost:5000/api/team/${teamId}`)
+    fetch(`${API_BASE_URL}/api/team/${teamId}`)
       .then(res => res.json())
       .then(data => setMember(data.data))
       .catch(err => console.error('Error fetching profile:', err));
