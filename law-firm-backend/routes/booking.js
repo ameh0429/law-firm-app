@@ -22,7 +22,8 @@ router.post('/', async (req, res) => {
     });
 
     await transporter.sendMail({
-      from: '"Big Palm Legal Booking" <amehmathiasejeh40@gmail.com>',
+      // from: '"Big Palm Legal Booking" <amehmathiasejeh40@gmail.com>',
+      from: `"${name}"`,
       to: process.env.EMAIL_TO,
       subject: 'New Appointment Booking',
       html: `<p><strong>Name:</strong> ${name}</p>

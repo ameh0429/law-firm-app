@@ -44,7 +44,8 @@ function BlogPost() {
     </em>
     {' '} | <strong>Author:</strong> {post.author}
   </p>
-  <div>{post.content}</div>
+  {/* <div>{post.content}</div> */}
+  <div>{post.content.split('\n\n').map((para, index) =>(<p key = {index}>{para}</p>))}</div>
 </article>
   );
 }

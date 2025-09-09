@@ -300,6 +300,12 @@ button:hover {
   text-align: left;
 }
 
+/* .blog-post p {
+  text-indent: 2em;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+} */
+
 .admin-login {
   max-width: 400px;
   margin: auto;
@@ -568,4 +574,10 @@ button:hover {
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+.hero-overlay {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 2rem;
+  border-radius: 8px;
 }
