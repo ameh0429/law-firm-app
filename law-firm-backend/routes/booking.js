@@ -6,9 +6,9 @@ const router = express.Router();
 dotenv.config()
 
 router.post('/', async (req, res) => {
-  const { name, date, time } = req.body;
+  const { name, date, time, email } = req.body;
 
-  if (!name || !date || !time) {
+  if (!name || !date || !time || !email) {
     return res.status(400).json({ success: false, message: 'All fields are required' });
   }
 
@@ -22,11 +22,13 @@ router.post('/', async (req, res) => {
     });
 
     await transporter.sendMail({
-      // from: '"Big Palm Legal Booking" <amehmathiasejeh40@gmail.com>',
-      from: `"${name}"`,
+      from: `"${name}" <${email}>`,
       to: process.env.EMAIL_TO,
       subject: 'New Appointment Booking',
-      html: `<p><strong>Name:</strong> ${name}</p>
+      html: `
+             <h3>New Booking Received</h3>       
+             <p><strong>Name:</strong> ${name}</p>
+             <p><strong>Email:</strong> ${email}</p>
              <p><strong>Date:</strong> ${date}</p>
              <p><strong>Time:</strong> ${time}</p>`
     });

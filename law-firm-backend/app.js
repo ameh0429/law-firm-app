@@ -7,7 +7,8 @@ import teamRoutes from './routes/team.js';
 import blogRoutes from './routes/blog.js';
 import adminRoutes from './routes/admin.js';
 import contactRoutes from './routes/contact.js';
-import bookingRoutes from './routes/booking.js'
+import bookingRoutes from './routes/booking.js';
+import paystackRoute from './routes/paystack.js';
 
 // Load environment variables
 dotenv.config();
@@ -39,6 +40,7 @@ app.use('/api/blog', blogRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/booking', bookingRoutes);
+app.use('/api/paystack', paystackRoute);
 app.use('/uploads', express.static('uploads'));
 
 // Health check endpoint
