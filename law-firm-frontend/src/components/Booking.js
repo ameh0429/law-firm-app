@@ -4,7 +4,7 @@ import Paystack from './PayStack.js';
 function Booking() {
   const [form, setForm] = useState({ name: '', date: '', time: '', email: '' });
   const setPaymentConfirmed = useState(false);
-  const amount = 100000; // ₦100000 consultation fee
+  const amount = 50000; // ₦50000 consultation fee
 
   const handleChange = e => {
     setForm({ ...form, [e.target.name]: e.target.value });

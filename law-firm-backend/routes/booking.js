@@ -11,7 +11,7 @@ router.post('/', async (req, res) => {
   if (!name || !date || !time || !email) {
     return res.status(400).json({ success: false, message: 'All fields are required' });
   }
-
+  
   try {
     const transporter = nodemailer.createTransport({
       service: 'gmail',

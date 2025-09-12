@@ -1,32 +1,3 @@
-// import React from 'react';
-// import { Link } from 'react-router-dom';
-
-// function Hero() {
-//   return (
-//     <section className="hero">
-//       <div
-//         className="hero-overlay"
-//         style={{
-//           backgroundImage: "url('/images/hero-legal.jpg')",
-//           backgroundSize: 'cover',
-//           backgroundPosition: 'center',
-//           padding: '4rem',
-//           color: 'white',
-//           textAlign: 'center'
-//         }}
-//       >
-//         <h2>Legal Expertise You Can Trust</h2>
-//         <p>Serving clients with integrity, dedication, and results.</p>
-//         <Link to="/booking">
-//           <button style={{ marginTop: '1rem' }}>Book a Consultation</button>
-//         </Link>
-//       </div>
-//     </section>
-//   );
-// }
-
-// export default Hero;
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -45,7 +16,7 @@ function Hero() {
         justifyContent: 'center',
         color: 'white',
         textAlign: 'center',
-        padding: '2rem'
+        padding: '0.5rem'
       }}
     >
       <div className="hero-overlay">
