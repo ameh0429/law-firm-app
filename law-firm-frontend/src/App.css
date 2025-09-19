@@ -6,7 +6,8 @@ body {
 }
 
 .navbar {
-  background-color: #004080;
+  /* background-color: #004080; */
+  background-color: #685404;
   color: white;
   padding: 1rem 2rem;
   display: flex;
@@ -588,7 +589,7 @@ button:hover {
 }
 
 .hero-overlay {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.2);
   padding: 2rem;
   border-radius: 8px;
 }

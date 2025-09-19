@@ -6,11 +6,11 @@ function Hero() {
     <section
       className="hero"
       style={{
-        backgroundImage: "url('/images/hero-legal.jpg')",
+        backgroundImage: "url('/images/heroo-legal.jpg')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        height: '100vh',
+        height: '90vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
