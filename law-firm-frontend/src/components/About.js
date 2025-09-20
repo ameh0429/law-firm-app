@@ -21,7 +21,7 @@ function About() {
         justifyContent: 'center',
         padding: '40px',
         position: 'relative',
-        color: '#fff',
+        // color: '#fff',
         textAlign: 'center',
       }}
     >
@@ -33,7 +33,7 @@ function About() {
           left: 0,
           right: 0,
           bottom: -32,
-          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+          // backgroundColor: 'rgba(0, 0, 0, 0.6)',
           zIndex: 1,
         }}
       ></div>

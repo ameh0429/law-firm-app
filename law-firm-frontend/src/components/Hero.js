@@ -14,7 +14,7 @@ function Hero() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        color: 'white',
+        color: 'black',
         textAlign: 'center',
         padding: '0.5rem'
       }}

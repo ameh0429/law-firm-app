@@ -7,46 +7,71 @@ function BlogPost() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  if (!id) return;
-  const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+    if (!id) return;
+    const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
-  fetch(`${API_BASE_URL}/api/blog/${id}`)
-    .then(res => res.json())
-    .then(data => {
-      console.log('Fetched blog post:', data);
-      if (data.success && data.data) {
-        setPost(data.data);
-      } else {
-        console.warn('Unexpected response format:', data);
-        setPost(null);
-      }
-      setLoading(false);
-    })
-    .catch(err => {
-      console.error('Error fetching post:', err);
-      setLoading(false);
-    });
-}, [id]);
+    fetch(`${API_BASE_URL}/api/blog/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log('Fetched blog post:', data);
+        if (data.success && data.data) {
+          setPost(data.data);
+        } else {
+          console.warn('Unexpected response format:', data);
+          setPost(null);
+        }
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error('Error fetching post:', err);
+        setLoading(false);
+      });
+  }, [id]);
 
   if (loading) return <p>Loading blog post...</p>;
   if (!post || !post.title) return <p>Blog post not found.</p>;
 
-
   return (
-   <article className="blog-post">
-  <h2>{post.title}</h2>
-  <p>
-    <em>
-      {new Date(post.date).toLocaleDateString('en-NG', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      })}
-    </em>
-    {' '} | <strong>Author:</strong> {post.author}
-  </p>
-  <div>{post.content.split('\n\n').map((para, index) =>(<p key = {index}>{para}</p>))}</div>
-</article>
+    <section
+      className="blog-post"
+      style={{
+        backgroundImage: 'url(/images/big-palm-logo.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        minHeight: '100vh',
+        padding: '60px 20px',
+        // color: '#fff',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      {/* Optional overlay for readability */}
+      <div
+        style={{
+          padding: '40px',
+          borderRadius: '12px',
+          maxWidth: '800px',
+          width: '100%',
+        }}
+      >
+        <h2 style={{ fontSize: '32px', marginBottom: '20px' }}>{post.title}</h2>
+        <p style={{ fontStyle: 'italic', marginBottom: '10px' }}>
+          {new Date(post.date).toLocaleDateString('en-NG', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}{' '}
+          | <strong>Author:</strong> {post.author}
+        </p>
+        <div style={{ fontSize: '16px', lineHeight: '1.6' }}>
+          {post.content.split('\n\n').map((para, index) => (
+            <p key={index}>{para}</p>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 

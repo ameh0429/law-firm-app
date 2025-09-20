@@ -21,10 +21,13 @@ function ServiceCard({ service, isActive, onToggle }) {
         transform: inView ? "translateY(0)" : "translateY(40px)",
         transition: "all 0.8s ease-out",
         position: "relative",
-        minHeight: "220px",
+        height: "320px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
+        alignItems: "center",
+        cursor: "pointer",
+
       }}
     >
       <div
@@ -32,10 +35,16 @@ function ServiceCard({ service, isActive, onToggle }) {
           backgroundColor: "rgba(0, 0, 0, 0.5)",
           padding: "20px",
           borderRadius: "8px",
+          textAlign: "center",
+      maxHeight: "80%",
+      overflowY: "auto",
+
         }}
       >
-        <h3 style={{ marginBottom: "10px" }}>{service.title}</h3>
-        {isActive && <p>{service.description}</p>}
+        <h3 style={{ marginBottom: "10px", fontSize: "18px" }}>{service.title}</h3>
+        {isActive && (
+      <p style={{ fontSize: "14px", lineHeight: "1.5" }}>{service.description}</p>
+    )}
       </div>
     </div>
   );

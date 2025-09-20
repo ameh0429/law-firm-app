@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import TeamList from './TeamList';
-import AddTeamMemberModal from './AddTeamMemberModal';
-import EditTeamMemberModal from './EditTeamMemberModal';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import TeamList from "./TeamList";
+import AddTeamMemberModal from "./AddTeamMemberModal";
+import EditTeamMemberModal from "./EditTeamMemberModal";
 
 function AdminDashboard() {
   const [showModal, setShowModal] = useState(false);
@@ -13,78 +13,85 @@ function AdminDashboard() {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
-    const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+    const API_BASE_URL =
+      process.env.REACT_APP_API_URL || "http://localhost:5000/api";
     try {
       const res = await fetch(`${API_BASE_URL}/api/team`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: formData
+        body: formData,
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        alert('Team member added successfully');
+        alert("Team member added successfully");
         form.reset();
         setShowModal(false);
-        setRefreshTeam(prev => !prev); // trigger refresh
+        setRefreshTeam((prev) => !prev); // trigger refresh
       } else {
-        alert(data.message || 'Failed to add team member');
+        alert(data.message || "Failed to add team member");
       }
     } catch (err) {
-      console.error('Error submitting form:', err);
-      alert('Server error');
+      console.error("Error submitting form:", err);
+      alert("Server error");
     }
   };
   const [selectedMember, setSelectedMember] = useState(null);
-const [showEditModal, setShowEditModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
-const handleEditClick = (member) => {
-  setSelectedMember(member);
-  setShowEditModal(true);
-};
-const handleEditSubmit = async (formData) => {
-  const token = localStorage.getItem('token');
+  const handleEditClick = (member) => {
+    setSelectedMember(member);
+    setShowEditModal(true);
+  };
+  const handleEditSubmit = async (formData) => {
+    const token = localStorage.getItem("token");
 
-  try {
-    const res = await fetch(`http://localhost:5000/api/team/${selectedMember._id}`, {
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-      body: formData
-    });
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/team/${selectedMember._id}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
 
-    const data = await res.json();
-    if (res.ok) {
-      alert('Team member updated successfully');
-      setShowEditModal(false);
-      setRefreshTeam(prev => !prev); // refresh list
-    } else {
-      alert(data.message || 'Update failed');
+      const data = await res.json();
+      if (res.ok) {
+        alert("Team member updated successfully");
+        setShowEditModal(false);
+        setRefreshTeam((prev) => !prev); // refresh list
+      } else {
+        alert(data.message || "Update failed");
+      }
+    } catch (err) {
+      console.error("Edit error:", err);
+      alert("Server error");
     }
-  } catch (err) {
-    console.error('Edit error:', err);
-    alert('Server error');
-  }
-};
+  };
 
   return (
     <div className="admin-dashboard">
       <h2>Welcome to the Admin Dashboard</h2>
 
-<div className="admin-actions">
-      <button onClick={() => setShowModal(true)} className="add-button">
-        Add Team Member
-      </button>
-      <button onClick={() => navigate('/admin/blogs')} className="manage-button">
-  Manage Blog Posts
-</button>
-</div>
+      <div className="admin-actions">
+        <button onClick={() => setShowModal(true)} className="add-button">
+          Add Team Member
+        </button>
+        <button
+          onClick={() => navigate("/admin/blogs")}
+          className="manage-button"
+        >
+          Manage Blog Posts
+        </button>
+      </div>
 
       <AddTeamMemberModal
         showModal={showModal}
@@ -93,16 +100,13 @@ const handleEditSubmit = async (formData) => {
       />
 
       <EditTeamMemberModal
-  member={selectedMember}
-  showModal={showEditModal}
-  setShowModal={setShowEditModal}
-  handleSubmit={handleEditSubmit}
-/>
+        member={selectedMember}
+        showModal={showEditModal}
+        setShowModal={setShowEditModal}
+        handleSubmit={handleEditSubmit}
+      />
 
-      <TeamList 
-      refreshTrigger={refreshTeam}
-      onEdit={handleEditClick}
- />
+      <TeamList refreshTrigger={refreshTeam} onEdit={handleEditClick} />
     </div>
   );
 }
